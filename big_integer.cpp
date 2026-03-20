@@ -180,7 +180,7 @@ void BigInteger::absDiv(const BigInteger& other) {
     while (res.size() > 1 && res.back() == 0) res.pop_back();
     digits_ = res;
 }
-
+// .
 BigInteger& BigInteger::operator+=(const BigInteger& rhs) {
     if (negative_ == rhs.negative_) {
         absSum(rhs);
