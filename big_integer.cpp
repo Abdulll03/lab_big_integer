@@ -141,20 +141,29 @@ void BigInteger::absSub(const BigInteger& other) {
     }
 }
 
-void BigInteger::absMul(const BigInteger& other){
+void BigInteger::absMul(const BigInteger& other) {
+    if (this->is_zero() || other.is_zero()) {
+        digits_ = {0};
+        return;
+    }
+
     int n = digits_.size();
     int m = other.digits_.size();
     std::vector<int> res(n + m, 0);
-    for (int i = 0; i < m; ++i){
-        int carry = 0;
-        for (int j = 0; j < n; ++j){
-            int cur = res[i + j] + digits_[j] * other.digits_[i] + carry;
-            res[i + j] = mod(cur, 10);
+
+    for (int i = 0; i < n; ++i) {
+        long long carry = 0;
+        for (int j = 0; j < m || carry > 0; ++j) {
+            long long cur = res[i + j] + carry;
+            if (j < m) {
+                cur += 1LL * digits_[i] * other.digits_[j];
+            }
+            res[i + j] = static_cast<int>(cur % 10);
             carry = cur / 10;
         }
-        if (carry) res[i + n] += carry;
     }
-    while (res.size() > 1 && res.back() == 0){
+
+    while (res.size() > 1 && res.back() == 0) {
         res.pop_back();
     }
     digits_ = res;
