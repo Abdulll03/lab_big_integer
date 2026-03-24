@@ -64,8 +64,15 @@ public:
     friend std::istream& operator>>(std::istream& is, BigInteger& value);
 
 private:
-    std::vector<int> digits_;
-    bool negative_ = false;
+    // ============================================================
+    //  Internal representation is up to the student.
+    //  Example: a vector of digits + a sign flag.
+    //  Students MAY change the private section, but the public
+    //  interface MUST NOT be modified.
+    // ============================================================
+
+    std::vector<int> digits_;  // digits (least significant first)
+    bool negative_ = false;    // true if the number is negative
 
     long long mod(long long a, long long b) const;
     void absSum(const BigInteger& other);
